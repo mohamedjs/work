@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'user_name','first_name','last_name', 'email', 'password','website',
+        'name', 'email', 'password','vacancy',
     ];
 
     /**
@@ -26,4 +26,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    public function days()
+    {
+      return $this->beLongsToMany('App\Day','user_day');
+    }
+    public function months()
+    {
+      return $this->beLongsToMany('App\Month','user_day');
+    }
+    public function feautres()
+    {
+      return $this->hasMany('App\Feautre');
+    }
 }

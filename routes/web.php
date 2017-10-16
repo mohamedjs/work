@@ -10,19 +10,25 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\User;
+use App\Month;
+Auth::routes();
 Route::group(['prefix' => LaravelLocalization::setLocale() ,
 'middleware' => ['localeSessionRedirect', 'localizationRedirect']] , function(){
 Route::get('/', function () {
-  $user=Auth::user();
-    return view('layouts.layout',compact('user'));
+    return view('layouts.layout');
 })->middleware('auth');
-
-Route::get('/admin', function () {
-  $user=Auth::user();
-    return view('usermanagment.adduser',compact('user'));
+Route::get('/day','Day@show');
+Route::get('/month','Month@show');
+Route::get('/admin','admin@show');
+Route::get('/user','user@show');
+Route::get('/user/{id}','user@allvacancy');
+Route::get('/days', function () {
+  $month=Month::all();
+  return view('admin.day',compact('month'));
 });
-Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
 });
-Route::post('/adduser','home@adduser');
+Route::post('/addvacancy','user@vacancy');
+Route::post('/view','user@usernumber');
+Route::post('/addva','admin@addlimitva');
+Route::post('/addday','admin@day');
+Route::post('/showmoday','admin@showmoday');
